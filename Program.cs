@@ -57,6 +57,46 @@ namespace Ejercicio
         }
         static void Main(string[] args)
         {
+            Tittle();
+            int op = 0;
+            while(op != 6)
+            {
+                Console.WriteLine("******MENU PRINCIPAL******");
+                Console.WriteLine("1. Registrar estudiante ");
+                Console.WriteLine("2. Buscar estudiante ");
+                Console.WriteLine("3. Modificar nota");
+                Console.WriteLine("4. Mostrar lista sin ordenar");
+                Console.WriteLine("5. Mostrar reporte ordenado");
+                Console.WriteLine("6. Salir del programa");
+                Console.Write("Ingresar opción: ");
+                if(op<1 || op > 6)
+                {
+                    Console.WriteLine("!!!!ERROR OPCION FUERA DE RANGO!!!!");
+                    continue;
+                }
+                switch (op)
+                {
+                    case 1:
+                        Registrar_Estu(); break;
+                    case 2:
+                        //Buscar_Estu();
+                        break;
+                    case 3:
+                        //modificar_nota();
+                        break;
+                    case 4:
+                        mostrar(); break;
+                    case 5:
+                        //burbuja();
+                        break;
+                    case 6:
+                        Console.WriteLine("Saliendo del sistema...."); break;
+                    default:
+                        Console.WriteLine("Opción incorrecta"); break ;
+
+                }
+                
+            }
         }
     }
 }
