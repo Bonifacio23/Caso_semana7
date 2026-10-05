@@ -72,7 +72,6 @@ namespace Ejercicio
                         }
                         Console.WriteLine("Nota inválida.");
                     }
-                    Console.WriteLine("Nota modificada exitosamente.");
                     encontrado = true;
                     break;
                 }
@@ -103,13 +102,15 @@ namespace Ejercicio
                     {
                         Console.WriteLine("Ingrese el nuevo nombre: ");
                         nuevoNombre = Console.ReadLine();
-                        if (!string.IsNullOrWhiteSpace(nuevoNombre))
+                        if (string.IsNullOrWhiteSpace(nuevoNombre))
                         {
                             break;
                         }
                         nombres[i] = nuevoNombre;
                         Console.WriteLine("Nombre modificado exitosamente.");
+                        break;
                     }
+                    encontrado = true;
                 }
                 if (!encontrado)
                 {
@@ -226,18 +227,19 @@ namespace Ejercicio
         {
             Tittle();
             int op = 0;
-            while(op != 8)
+            while(op != 9)
             {
                 Console.Clear();
                 Console.WriteLine("******MENU PRINCIPAL******");
                 Console.WriteLine("1. Registrar estudiante ");
                 Console.WriteLine("2. Buscar estudiante ");
                 Console.WriteLine("3. Modificar Nota");
-                Console.WriteLine("4. Mostrar lista sin ordenar");
-                Console.WriteLine("5. Mostrar reporte ordenado");
-                Console.WriteLine("6. Mostrar por seleccion DESC");
-                Console.WriteLine("7. Promedio y nota maxima");
-                Console.WriteLine("8. Salir");
+                Console.WriteLine("4. Modificar Nombre");
+                Console.WriteLine("5. Mostrar lista sin ordenar");
+                Console.WriteLine("6. Mostrar reporte ordenado");
+                Console.WriteLine("7. Mostrar por seleccion DESC");
+                Console.WriteLine("8. Promedio y nota maxima");
+                Console.WriteLine("9. Salir");
                 Console.Write("Ingresar opción: ");
                 if (!int.TryParse(Console.ReadLine(),out op))
                 {
@@ -255,15 +257,18 @@ namespace Ejercicio
                         modificar_Not();
                         break;
                     case 4:
-                        mostrar(); break;
+                        modificar_nom();
+                        break;
                     case 5:
+                        mostrar(); break;
+                    case 6:
                         burbuja();
                         break;
-                    case 6:
-                        seleccion_desc(); break;
                     case 7:
-                        promedio_maximo(); break;
+                        seleccion_desc(); break;
                     case 8:
+                        promedio_maximo(); break;
+                    case 9:
                         Console.WriteLine("Saliendo del sistema...."); break;
                     default:
                         Console.WriteLine("Opción incorrecta"); break ;
