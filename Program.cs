@@ -43,8 +43,14 @@ namespace Ejercicio
             notas[contador] = nota;
             contador++;
         }
-        static public void modificar_nota()
+        static public void modificar_Not()
         {
+            Console.WriteLine("**********MODIFICAR ESTUDIANTE**********");
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay estudiantes registrados.");
+                return;
+            }
             Console.WriteLine("Ingrese el nombre del estudiante a modificar: ");
             string nombreBuscado = Console.ReadLine();
             bool encontrado = false;
@@ -60,11 +66,12 @@ namespace Ejercicio
                         nuevaNota = double.Parse(Console.ReadLine());
                         if (nuevaNota >= 0 && nuevaNota <= 20)
                         {
+                            notas[i] = nuevaNota;
+                            Console.WriteLine("Nota modificada exitosamente.");
                             break;
                         }
                         Console.WriteLine("Nota inválida.");
                     }
-                    notas[i] = nuevaNota;
                     Console.WriteLine("Nota modificada exitosamente.");
                     encontrado = true;
                     break;
@@ -75,8 +82,49 @@ namespace Ejercicio
                 Console.WriteLine("Estudiante no encontrado.");
             }
         }
-        static public void Buscar_Estu()
+        static public void modificar_nom()
         {
+            Console.WriteLine("**********MODIFICAR ESTUDIANTE**********");
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay estudiantes registrados.");
+                return;
+            }
+            Console.WriteLine("Ingrese el nombre del estudiante a modificar: ");
+            string nombreBuscado = Console.ReadLine();
+            bool encontrado = false;
+            for (int i = 0; i < contador; i++)
+            {
+                if (nombres[i].Equals(nombreBuscado, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"Estudiante encontrado: {nombres[i]} - Nota: {notas[i]}");
+                    String nuevoNombre;
+                    while (true)
+                    {
+                        Console.WriteLine("Ingrese el nuevo nombre: ");
+                        nuevoNombre = Console.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(nuevoNombre))
+                        {
+                            break;
+                        }
+                        nombres[i] = nuevoNombre;
+                        Console.WriteLine("Nombre modificado exitosamente.");
+                    }
+                }
+                if (!encontrado)
+                {
+                    Console.WriteLine("Estudiante no encontrado.");
+                }
+            }
+        }
+            static public void Buscar_Estu()
+            {
+            Console.WriteLine("**********BUSCAR ESTUDIANTE**********");
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay estudiantes registrados.");
+                return;
+            }
             Console.WriteLine("Ingrese el nombre del estudiante a buscar: ");
             string nombreBuscado = Console.ReadLine();
             bool encontrado = false;
@@ -116,6 +164,52 @@ namespace Ejercicio
             Console.WriteLine("Lista ordenada por nota de menor a mayor:");
             mostrar();
         }
+        
+        static public void seleccion_desc()
+        {
+            for (int i = 0; i < contador - 1; i++)
+            {
+                int indiceMaximo = i;
+                for (int j = i + 1; j < contador; j++)
+                {
+                    if (notas[j] > notas[indiceMaximo])
+                    {
+                        indiceMaximo = j;
+                    }
+                }
+                // Intercambiar notas
+                double tempNota = notas[i];
+                notas[i] = notas[indiceMaximo];
+                notas[indiceMaximo] = tempNota;
+                // Intercambiar nombres correspondientes
+                string tempNombre = nombres[i];
+                nombres[i] = nombres[indiceMaximo];
+                nombres[indiceMaximo] = tempNombre;
+            }
+            Console.WriteLine("Lista ordenada por nota de mayor a menor:");
+            mostrar();
+        }
+        static public void promedio_maximo()
+        {
+            if (contador == 0)
+            {
+                Console.WriteLine("No hay estudiantes registrados.");
+                return;
+            }
+            double suma = 0;
+            double maxNota = notas[0];
+            for (int i = 0; i < contador; i++)
+            {
+                suma += notas[i];
+                if (notas[i] > maxNota)
+                {
+                    maxNota = notas[i];
+                }
+            }
+            double promedio = suma / contador;
+            Console.WriteLine($"Promedio de notas: {promedio:F2}");
+            Console.WriteLine($"Nota máxima: {maxNota}");
+        }
         static public void mostrar()
         {
             Console.WriteLine("****************************Listado de estudiantes**********************");
@@ -132,18 +226,20 @@ namespace Ejercicio
         {
             Tittle();
             int op = 0;
-            while(op != 6)
+            while(op != 8)
             {
+                Console.Clear();
                 Console.WriteLine("******MENU PRINCIPAL******");
                 Console.WriteLine("1. Registrar estudiante ");
                 Console.WriteLine("2. Buscar estudiante ");
-                Console.WriteLine("3. Modificar nota");
+                Console.WriteLine("3. Modificar Nota");
                 Console.WriteLine("4. Mostrar lista sin ordenar");
                 Console.WriteLine("5. Mostrar reporte ordenado");
-                Console.WriteLine("6. Salir del programa");
+                Console.WriteLine("6. Mostrar por seleccion DESC");
+                Console.WriteLine("7. Promedio y nota maxima");
+                Console.WriteLine("8. Salir");
                 Console.Write("Ingresar opción: ");
-                op = int.Parse(Console.ReadLine());
-                if (op<1 || op > 6)
+                if (!int.TryParse(Console.ReadLine(),out op))
                 {
                     Console.WriteLine("!!!!ERROR OPCION FUERA DE RANGO!!!!");
                     continue;
@@ -156,7 +252,7 @@ namespace Ejercicio
                         Buscar_Estu();
                         break;
                     case 3:
-                        modificar_nota();
+                        modificar_Not();
                         break;
                     case 4:
                         mostrar(); break;
@@ -164,11 +260,16 @@ namespace Ejercicio
                         burbuja();
                         break;
                     case 6:
+                        seleccion_desc(); break;
+                    case 7:
+                        promedio_maximo(); break;
+                    case 8:
                         Console.WriteLine("Saliendo del sistema...."); break;
                     default:
                         Console.WriteLine("Opción incorrecta"); break ;
 
                 }
+                Console.ReadKey();
                 
             }
         }
