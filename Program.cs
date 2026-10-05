@@ -14,7 +14,7 @@ namespace Ejercicio
         static int contador = 0;
         static public void Tittle()
         {
-            Console.WriteLine("***************************************"); Console.WriteLine("SISTEMA DE NOTAS"); Console.WriteLine("***************************************");
+            Console.WriteLine("***************************************"); Console.WriteLine("\tSISTEMA DE NOTAS"); Console.WriteLine("***************************************");
         }
         static public void Registrar_Estu()
         {
@@ -43,6 +43,79 @@ namespace Ejercicio
             notas[contador] = nota;
             contador++;
         }
+        static public void modificar_nota()
+        {
+            Console.WriteLine("Ingrese el nombre del estudiante a modificar: ");
+            string nombreBuscado = Console.ReadLine();
+            bool encontrado = false;
+            for (int i = 0; i < contador; i++)
+            {
+                if (nombres[i].Equals(nombreBuscado, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"Estudiante encontrado: {nombres[i]} - Nota: {notas[i]}");
+                    double nuevaNota;
+                    while (true)
+                    {
+                        Console.WriteLine("Ingrese la nueva nota: ");
+                        nuevaNota = double.Parse(Console.ReadLine());
+                        if (nuevaNota >= 0 && nuevaNota <= 20)
+                        {
+                            break;
+                        }
+                        Console.WriteLine("Nota inválida.");
+                    }
+                    notas[i] = nuevaNota;
+                    Console.WriteLine("Nota modificada exitosamente.");
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado)
+            {
+                Console.WriteLine("Estudiante no encontrado.");
+            }
+        }
+        static public void Buscar_Estu()
+        {
+            Console.WriteLine("Ingrese el nombre del estudiante a buscar: ");
+            string nombreBuscado = Console.ReadLine();
+            bool encontrado = false;
+            for (int i = 0; i < contador; i++)
+            {
+                if (nombres[i].Equals(nombreBuscado, StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine($"Estudiante encontrado: {nombres[i]} - Nota: {notas[i]}");
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado)
+            {
+                Console.WriteLine("Estudiante no encontrado.");
+            }
+        }
+        static public void burbuja()
+        {
+            for (int i = 0; i < contador - 1; i++)
+            {
+                for (int j = 0; j < contador - i - 1; j++)
+                {
+                    if (notas[j] > notas[j + 1])
+                    {
+                        // Intercambiar notas
+                        double tempNota = notas[j];
+                        notas[j] = notas[j + 1];
+                        notas[j + 1] = tempNota;
+                        // Intercambiar nombres correspondientes
+                        string tempNombre = nombres[j];
+                        nombres[j] = nombres[j + 1];
+                        nombres[j + 1] = tempNombre;
+                    }
+                }
+            }
+            Console.WriteLine("Lista ordenada por nota de menor a mayor:");
+            mostrar();
+        }
         static public void mostrar()
         {
             Console.WriteLine("****************************Listado de estudiantes**********************");
@@ -69,7 +142,8 @@ namespace Ejercicio
                 Console.WriteLine("5. Mostrar reporte ordenado");
                 Console.WriteLine("6. Salir del programa");
                 Console.Write("Ingresar opción: ");
-                if(op<1 || op > 6)
+                op = int.Parse(Console.ReadLine());
+                if (op<1 || op > 6)
                 {
                     Console.WriteLine("!!!!ERROR OPCION FUERA DE RANGO!!!!");
                     continue;
@@ -79,15 +153,15 @@ namespace Ejercicio
                     case 1:
                         Registrar_Estu(); break;
                     case 2:
-                        //Buscar_Estu();
+                        Buscar_Estu();
                         break;
                     case 3:
-                        //modificar_nota();
+                        modificar_nota();
                         break;
                     case 4:
                         mostrar(); break;
                     case 5:
-                        //burbuja();
+                        burbuja();
                         break;
                     case 6:
                         Console.WriteLine("Saliendo del sistema...."); break;
